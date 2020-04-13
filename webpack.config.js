@@ -2,12 +2,13 @@
  * @Description: webpack配置
  * @Author: AodaZhang
  * @Date: 2020-04-12 18:44:47
- * @LastEditTime: 2020-04-13 14:56:11
+ * @LastEditTime: 2020-04-13 23:30:25
  */
 const path = require('path')
 const merge = require('webpack-merge')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
 
 // 路径
 const entryPath = path.resolve(__dirname, './src/index.js')
@@ -90,5 +91,15 @@ const prodConfig = {
   mode: 'production',
   devtool: 'none',
   performance: false,
+  plugins: [
+    new CompressionWebpackPlugin({
+      filename: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.html$|\.css$|\.js$/,
+      threshold: 0, // 只有大小大于该值的资源会被处理
+      minRatio: 0.8, // 只有压缩率小于这个值的资源才会被处理
+      deleteOriginalAssets: false// 删除原文件
+    })
+  ]
 }
 module.exports = merge(baseConfig, process.env.NODE_ENV === 'development' ? devConfig : prodConfig)
