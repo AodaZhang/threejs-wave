@@ -1,4 +1,4 @@
-#### Three.js Wave Animation
+## Three.js Wave Animation
 
 1.A Wave Animation Demo
 
